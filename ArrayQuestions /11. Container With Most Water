@@ -1,0 +1,23 @@
+class Solution {
+    public int maxArea(int[] height) {
+        int hig= 0;
+        int length=0;
+        int container=0;
+        int i=0;
+        while( i < height.length){
+            int j=0;
+            int count=0;
+            while(i<height.length-(j+1) && hig<=height[i]){
+                hig=height[i];
+                length=height[height.length-(j+1)];
+                int water = Math.min(hig,length)*((height.length-(j+1))-i);
+                if(container<water){
+                    container=water;
+                }
+                j++;
+            }  
+            i++;
+        }
+        return container;
+    }
+}
