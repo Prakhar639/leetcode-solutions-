@@ -1,0 +1,53 @@
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        boolean board[][]=new boolean[n][n];
+        List<List<String>>main= new ArrayList<>();
+        queen(board,0,main);
+        return main;
+        
+    }
+    static void queen(boolean[][] board,int row,List<List<String>>ans){
+            if(row==board.length){
+                ans.add(display(board));
+                return;
+            }
+            for(int coll=0;coll<board.length;coll++){
+                if(issafe(board,row,coll)){
+                    board[row][coll]=true;
+                    queen(board,row+1,ans);
+                    board[row][coll]=false;
+                }
+            }
+        }
+        static boolean issafe(boolean[][]board,int row, int col){
+            for(int i=0;i<row;i++){
+                if(board[i][col]){
+                    return false;
+                }
+            }
+            int leftdigonal=Math.min(row,col);
+            for(int j=1;j<=leftdigonal;j++){
+                if(board[row-j][col-j]){
+                    return false;
+                }
+            }
+            int rightdigonal=Math.min(row, board.length-col-1);
+            for(int k=1;k<=rightdigonal;k++){
+                if(board[row-k][col+k]){
+                    return false;
+                }
+            }
+            return true;
+        }
+        static List<String> display(boolean[][]board){
+            List<String>inner=new ArrayList<>();
+            for(boolean[] row:board){
+                String p="";
+                for(boolean element : row){
+                    p+=element?"Q":".";
+                }
+                inner.add(p);
+            }
+            return inner;
+        }
+}
